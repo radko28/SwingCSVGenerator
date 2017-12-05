@@ -1,0 +1,264 @@
+/a
+___________________________  Invoice Image PIN  ____________________________ ___
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+
+  This program will export a CSV file with Webarchive Access code
+  for selected shop and time range.
+
+
+  Invoice to ShopNr :    ______. (0 is not allowed)
+
+  Invoice Date from : __/__/____
+  Invoice Date to   : __/__/____
+
+  Filename          : _______________________________________________________
+
+
+  Start (Y/N)       : _
+
+
+
+
+
+
+
+[Esc] = exit
+
+/busy
+旼컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴?
+?                                ?
+?processing invoice nr. ________ ?
+?                                ?
+읕[Esc] = stop컴컴컴컴컴컴컴컴컴컴?
+
+/result
+旼컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴?
+?                                ?
+?_________ invoices exported     ?
+?                                ?
+읕[Any Key] = quit 컴컴컴컴컴컴컴켸
+
+/*
+#REPLACE modulename "Invoice Image PIN Finder"
+#REPLACE _msg.dateInFuture "Date must not be in future"
+#REPLACE _msg.dateFromAfterTo "From-Date must be before To-Date"
+
+#include d_global.msg
+
+#include df3xcomp.inc
+#include d_secure.inc
+#include d_param.inc
+#include d_global.inc
+#include d_global.mac
+#include excelcsv.inc
+
+// define _DEBUG
+// use trace.pkg
+
+checkrights moduleID modulename
+
+string chr 1
+string dateTo
+string dateFrom
+integer dateMax
+#boolean
+#date format
+indicator dateWrong
+string temstr
+
+#connections
+#datova struktura
+open_ro d_syspar
+open_ro d_faktsu
+
+#fill page A
+autopage a
+name a.modver a.appID a.user
+name a.shopnr
+name a.dateFrom
+name a.dateTo
+name a.filename
+name a.go
+
+screenmode 2 on
+revision              a.modver
+move d_syspar.ID   to a.appid
+move d_mitarb.code to a.user
+screenmode 1 off
+
+move key_no to a.go
+#input obrazovka
+#deklaracia
+page a
+sysdate a.dateTo
+move (a.dateTo - 180) to a.dateFrom
+sysdate dateMax
+
+// main
+string filename
+integer invoicesCount
+#set variable value
+move 0 to invoicesCount
+
+#validacia a.shopnr
+accept a.shopnr {range=1, 9999999}
+
+repeat
+#input data s validaciou
+  gosub getDateRange
+  indicate dateWrong false
+  if (a.dateFrom > a.dateTo) begin
+#exception validacia datumu  
+    call showFromAfterToError
+  end
+[dateWrong] loop
+
+move "PINExport_" to filename
+move a.dateFrom to dateFrom
+move a.dateTo to dateTo
+#parse date
+move (replaces("/",dateFrom,"-")) to dateFrom
+#parse date
+move (replaces("/",dateTo,"-")) to dateTo
+#parse date
+move (replaces(".",dateFrom,"-")) to dateFrom
+#parse date
+move (replaces(".",dateTo,"-")) to dateTo
+append filename (trim(a.shopnr)) "_" dateFrom "_" dateTo "." (getParamString(PAR_EXCELCSV.FILEEXTENSION))
+#read only field update file name
+move filename to a.filename
+
+#validacia a.go
+accept a.go {capslock check="YN"}
+#
+#disable buttons
+keyproc off
+  if (a.go = KEY_YES) begin
+#waiting screen  
+    page busy at 13 20
+#procedure findInvoices	
+    call findInvoices
+#procedure showResult	
+    call showResult
+  end
+#enable buttons  
+keyproc on
+
+#exit program ESC
+keyproc key.escape
+  abort
+
+keyproc key.up
+keyproc key.field
+  backfield
+return
+
+// subroutines
+getDateRange:
+  repeat
+    indicate dateWrong false
+#validacia	a.dateFrom
+    accept a.dateFrom {range=01/01/1980,01/01/2099}
+    if (a.dateFrom > dateMax) begin
+      call showDateFutureError
+    end
+  [dateWrong] loop
+
+  repeat
+    indicate dateWrong false
+#validacia 	a.dateTo
+    accept a.dateTo {range=01/01/1980,01/01/2099}
+    if (a.dateTo > dateMax) begin
+      call showDateFutureError
+    end
+  [dateWrong] loop
+return
+
+procedure findInvoices
+#clear data structure
+  clear d_faktsu
+#fill wit data  
+  move a.shopnr to d_faktsu.fakthaendler
+  repeat
+  #volanie do Databazy, hladanie cisla obchodu, index.3
+    find gt d_faktsu by index.3
+#nasiel faktury pre tento obchod	
+    [found] indicate found as (d_faktsu.fakthaendler = a.shopnr)
+#nenasiel ziadne faktury pre tento obchod	
+    [not found] break
+
+    if ((d_faktsu.belegdatum >= a.dateFrom) and (d_faktsu.belegdatum <= a.dateTo) and (d_faktsu.faktversion = FAKTVERSION_AKTUELL)) begin
+#zapis header for CSV suboru	
+      if (invoicesCount = 0) begin
+        direct_output a.filename
+#procedure writeHeader		
+        call writeHeader
+      end
+#zapis dat do suboru
+      increment invoicesCount
+      move d_faktsu.rechnungsnr to busy.1
+#procedure writeToFile	  
+      call writeToFile
+    end
+  loop
+
+  if (invoicesCount > 0) begin
+    close_output
+  end
+end_procedure
+
+procedure writeHeader
+  writecsv "Invoice to ShopNr" csvdelimiter
+  writecsv "Invoice Number" csvdelimiter
+  writecsv "Invoice Date" csvdelimiter
+  writecsv "PIN"
+  writeln
+end_procedure
+
+procedure writeToFile
+  writecsv d_faktsu.fakthaendler csvdelimiter
+  writecsv d_faktsu.rechnungsnr csvdelimiter
+  writecsv d_faktsu.belegdatum csvdelimiter
+
+  if (trim(d_faktsu.accessCode) = "") begin
+     writecsv "no PIN available"
+  end
+  else begin
+    writecsv (trim(d_faktsu.accessCode))
+  end
+  writeln
+end_procedure
+
+procedure showResult
+  screenmode 2 on
+  page result at 13 20
+#show number of invoices in screen result  
+  move invoicesCount to result.1
+  screenmode 2 off
+#wait for input  
+  inkey chr
+end_procedure
+
+procedure showDateFutureError
+  screenmode 2 on
+  indicate dateWrong true
+  gotoxy screenend 0
+#show message  
+  show _msg.dateInFuture
+#wait for input    
+  inkey temstr
+  clearxy screenend 0
+  screenmode 1 off
+end_procedure
+
+procedure showFromAfterToError
+  screenmode 2 on
+  indicate dateWrong true
+  gotoxy screenend 0
+  show _msg.dateFromAfterTo
+#wait for input    
+  inkey temstr
+  clearxy screenend 0
+  screenmode 1 off
+end_procedure
+
