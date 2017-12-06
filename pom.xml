@@ -21,4 +21,25 @@
     	<version>1.5</version>
 	</dependency>
   </dependencies>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <configuration>
+                <mainClass>sk.cyklosoft.swingCSVgenerator.CSVPanel</mainClass>
+            </configuration>
+        </plugin>
+        <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.6.1</version>
+            <configuration>
+            	<source>1.7</source>
+                <target>1.7</target>
+            </configuration>
+         </plugin>
+    </plugins>
+</build>  
 </project>
