@@ -1,32 +1,59 @@
 package sk.cyklosoft.swingCSVgenerator;
 
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+
+import org.jdesktop.swingx.JXDatePicker;
 
 public class CSVPanel extends JFrame {
 	private static String BUTTON_CANCEL="Cancel";
 	private static String BUTTON_OK="Start";
+	private static String DATE_FORMAT="dd-MM-yyyy";
+	private static String MSG_DATE_IN_FUTURE="Date must not be in future";
+	private static String MSG_DATE_FROM_AFTER_TO="From-Date must be before To-Date";
 	
-	public static void main( String[] args ) {
+	 
+	
+	public static void main( String[] args ) throws ParseException {
     	CSVPanel cp = new CSVPanel("CSV Generator");
    		cp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cp.setSize(800,600);
+		cp.setSize(600,300);
 		cp.setVisible(true);
     }
 	
-    public CSVPanel(String title) {
+    public CSVPanel(String title) throws ParseException {
     	super(title);
-    	getContentPane().setLayout(new GridBagLayout());
+    	final Container pane = getContentPane();
+    	final JPanel inputPanel = new JPanel();
+    	JPanel buttonPanel = new JPanel();
+    	inputPanel.setLayout(new GridBagLayout());
+    	JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+		inputPanel,buttonPanel);                                   
+		pane.add(splitPane);
+    	final JButton jbtOk = new JButton(BUTTON_OK);
+    	jbtOk.setEnabled(false);
+		final JLabel jlErrorDateFrom = new JLabel();
+		final JLabel jlErrorDateTo = new JLabel();
+		
     	
 		GridBagConstraints gbc=new GridBagConstraints();
 		gbc.anchor=GridBagConstraints.WEST;
@@ -34,74 +61,142 @@ public class CSVPanel extends JFrame {
 //labels, textfields
 		gbc.gridx=0;
 		gbc.gridy=0;
-		getContentPane().add(new JLabel("Invoice to ShopNr"),gbc);
+		inputPanel.add(new JLabel("Invoice to ShopNr"),gbc);
 		gbc.gridy++;
-		getContentPane().add(new JLabel("Invoice Date from"),gbc);
+		inputPanel.add(new JLabel("Invoice Date from"),gbc);
 		gbc.gridy++;
-		getContentPane().add(new JLabel("Invoice Date to"),gbc);
+		inputPanel.add(new JLabel("Invoice Date to"),gbc);
 		gbc.gridy++;
-		getContentPane().add(new JLabel("Filename"),gbc);
+		inputPanel.add(new JLabel("Filename"),gbc);
 		gbc.gridy++;
-/*		
-		getContentPane().add(new JLabel("surname"),gbc);
-		gbc.gridy++;
-		getContentPane().add(new JLabel("mobil"),gbc);
-		gbc.gridy++;
-		getContentPane().add(new JLabel("address"),gbc);
-		gbc.gridy++;
-		getContentPane().add(new JLabel("city"),gbc);
-		gbc.gridy++;
-		getContentPane().add(new JLabel("zip"),gbc);
-		gbc.gridy++;
-		getContentPane().add(new JLabel("web"),gbc);
-*/
+		inputPanel.add(new JLabel("Invoices exported"),gbc);
+
 		gbc.gridx=1;
 		gbc.gridy=0;
-		JTextField email=new JTextField(10);
-		getContentPane().add(email,gbc);
+		
+		final JTextField jtShopnr = new JTextField();
+		jtShopnr.setColumns(10);
+		inputPanel.add(jtShopnr,gbc);
+		
+		jtShopnr.addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+	            char c = e.getKeyChar();
+	            if(jtShopnr.getText().length() > 8) {
+	            	e.consume();
+	            }
+	            if (!((c >= '0') && (c <= '9') ||
+	               (c == KeyEvent.VK_BACK_SPACE) ||
+	               (c == KeyEvent.VK_DELETE))) {
+	              e.consume();
+	            }
+	          }
+	        });		
+		
 		gbc.gridy++;
-		JTextField password=new JTextField(10);
-		getContentPane().add(password,gbc);
-		gbc.gridy++;
-		JTextField vpassword=new JTextField(10);
-		getContentPane().add(vpassword,gbc);
+	
+		final JXDatePicker jxdpDateFrom = new JXDatePicker();
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat sdf= new SimpleDateFormat(DATE_FORMAT);
+		c.add(Calendar.DATE, -180);
+		jxdpDateFrom.setDate(c.getTime());
+		jxdpDateFrom.setFormats(sdf);
+		inputPanel.add(jxdpDateFrom,gbc);
 		gbc.gridy++;
 		
-		JTextField firstname=new JTextField(10);
-		getContentPane().add(firstname,gbc);
-		gbc.gridy++;
-/*		
-		surname=new JTextField(10);
-		jdg.getContentPane().add(surname,gbc);
-		gbc.gridy++;
-		mobil=new JTextField(10);
-		jdg.getContentPane().add(mobil,gbc);
-		gbc.gridy++;
-		address=new JTextField(10);
-		jdg.getContentPane().add(address,gbc);
-		gbc.gridy++;
-		city=new JTextField(10);
-		getContentPane().add(city,gbc);
-		gbc.gridy++;
-		zip=new JTextField(10);
-		jdg.getContentPane().add(zip,gbc);
-		gbc.gridy++;
-		web=new JTextField(10);
-		jdg.getContentPane().add(web,gbc);
-*/
-//buttons
-		gbc.gridx=1;
-		gbc.gridy=GridBagConstraints.RELATIVE;
-		getContentPane().add(Buttons(),gbc);
+		final JXDatePicker jxdpDateTo = new JXDatePicker();
+		Calendar cTo = Calendar.getInstance();
+		jxdpDateTo.setDate(cTo.getTime());
+		jxdpDateTo.setFormats(sdf);
+		
+		jxdpDateFrom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(jxdpDateFrom.getDate().compareTo(jxdpDateTo.getDate()) == 1) {
+					jlErrorDateFrom.setText(MSG_DATE_FROM_AFTER_TO);
+					jlErrorDateFrom.setForeground(Color.RED);
+					jlErrorDateTo.setText(MSG_DATE_FROM_AFTER_TO);
+					jlErrorDateTo.setForeground(Color.RED);					
+				} else {
+					jlErrorDateFrom.setText("");
+					jlErrorDateFrom.setForeground(Color.WHITE);
+					jlErrorDateTo.setText("");
+					jlErrorDateTo.setForeground(Color.WHITE);
+				}
 
-	//	setLocationRelativeTo(f);
+				if(jxdpDateFrom.getDate().compareTo(new Date()) == 1) {
+					jlErrorDateFrom.setText(MSG_DATE_IN_FUTURE);
+					jlErrorDateFrom.setForeground(Color.RED);
+				} else {
+					jlErrorDateFrom.setText("");
+					jlErrorDateFrom.setForeground(Color.WHITE);		
+				}
+				
+				jbtOk.setEnabled((jxdpDateFrom.getDate().compareTo(jxdpDateTo.getDate()) != 1)&&(jxdpDateFrom.getDate().compareTo(new Date()) != 1) && (jxdpDateTo.getDate().compareTo(new Date()) != 1));
+			}
+			
+		  });
+
+		inputPanel.add(jxdpDateTo,gbc);
+		jxdpDateTo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(jxdpDateFrom.getDate().compareTo(jxdpDateTo.getDate()) == 1) {
+					jlErrorDateFrom.setText(MSG_DATE_FROM_AFTER_TO);
+					jlErrorDateFrom.setForeground(Color.RED);
+					jlErrorDateTo.setText(MSG_DATE_FROM_AFTER_TO);
+					jlErrorDateTo.setForeground(Color.RED);					
+				} else {
+					jlErrorDateFrom.setText("");
+					jlErrorDateFrom.setForeground(Color.WHITE);
+					jlErrorDateTo.setText("");
+					jlErrorDateTo.setForeground(Color.WHITE);
+				}
+				
+				if(jxdpDateTo.getDate().compareTo(new Date()) == 1) {
+					jlErrorDateTo.setText(MSG_DATE_IN_FUTURE);
+					jlErrorDateTo.setForeground(Color.RED);
+				} else {
+					jlErrorDateTo.setText("");
+					jlErrorDateTo.setForeground(Color.WHITE);					
+				}
+
+				jbtOk.setEnabled((jxdpDateFrom.getDate().compareTo(jxdpDateTo.getDate()) != 1)&&(jxdpDateFrom.getDate().compareTo(new Date()) != 1) && (jxdpDateTo.getDate().compareTo(new Date()) != 1));				
+			}
+			
+		  });
+		gbc.gridy++;
+
+		JLabel jlFilename = new JLabel("filename");
+		inputPanel.add(jlFilename,gbc);
+		gbc.gridy++;
+		JLabel jlInvoices = new JLabel("10");
+		inputPanel.add(jlInvoices,gbc);
+//buttons
+		//gbc.gridx=1;
+		//gbc.gridy=GridBagConstraints.RELATIVE;
+		buttonPanel.add(Buttons(jbtOk),gbc);
+		
+		gbc.gridx=2;
+		gbc.gridy=0;
+		inputPanel.add(new JLabel("error"),gbc);
+		gbc.gridy++;
+
+		inputPanel.add(jlErrorDateFrom,gbc);
+		gbc.gridy++;
+		inputPanel.add(jlErrorDateTo,gbc);
+
+		
+		
+		  jbtOk.addActionListener(new ActionListener() {
+			  	public void actionPerformed(ActionEvent e) {
+			  		//jxdpDateFrom.setVisible(false);
+			  		//jbtOk.setEnabled(false);
+			  	}
+		  });			  	
 	}
-    protected JPanel Buttons() {
+	protected JPanel Buttons(JButton jbtOk) {
 		  JPanel panel=new JPanel();
 		  panel.setLayout(new FlowLayout());
-		  JButton jbt=new JButton(BUTTON_OK);
 		  JButton jbtCancel=new JButton(BUTTON_CANCEL);
-		  panel.add(jbt);
+		  panel.add(jbtOk);
 		  panel.add(jbtCancel);
 		  return panel;
     }
