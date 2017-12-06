@@ -1,11 +1,11 @@
 # SwingCSVGenerator
 Java Swing application for generating CSV files.
 
-#get sources
+#get sources<br/>
 $git clone https://github.com/radko28/SwingCSVGenerator.git
 
-#build
+#build<br/>
 $mvn clean install
 
-#run
+#run<br/>
 $mvn exec:java
