@@ -6,12 +6,15 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import sk.cyklosoft.swingCSVgenerator.data.InvoiceData;
+import sk.cyklosoft.swingCSVgenerator.dbmock.InvoiceDataMock;
 import sk.cyklosoft.swingCSVgenerator.panel.InputPanel;
 
 public class CSVPanel extends JFrame {
@@ -37,7 +40,7 @@ public class CSVPanel extends JFrame {
 		pane.add(splitPane);
 		
 		final JButton jbtOk = new JButton(BUTTON_OK);
-    	jbtOk.setEnabled(false);
+    	jbtOk.setEnabled(true);
 		buttonPanel.add(Buttons(jbtOk));
 		
 		  jbtOk.addActionListener(new ActionListener() {
@@ -46,6 +49,14 @@ public class CSVPanel extends JFrame {
 	  				inputPanel.getJlErrorShopNr().setForeground(Color.RED);
 	  			} else {
 	  				inputPanel.getJlErrorShopNr().setForeground(Color.BLACK);
+	  				
+	  				//search values in database
+	  				InvoiceDataMock invoiceDataMock  = new InvoiceDataMock();
+	  				List<InvoiceData> invoiceData = invoiceDataMock.getInvoiceDataList(inputPanel.getShopData());
+	  				//progress status
+	  				//save to csv invoiceData
+	  				//view incount count invoiceData.size()
+	  				inputPanel.setJlInvoices(invoiceData.size());
 	  			}
 			  		//jxdpDateFrom.setVisible(false);
 			  		//jbtOk.setEnabled(false);
@@ -71,6 +82,7 @@ public class CSVPanel extends JFrame {
 		  JPanel panel=new JPanel();
 		  panel.setLayout(new FlowLayout());
 		  jbt=new JButton(OK);
+
 
 
 		  jbt.addActionListener(new ActionListener() {

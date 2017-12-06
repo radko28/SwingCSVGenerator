@@ -12,30 +12,30 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import sk.cyklosoft.swingCSVgenerator.data.ShopData;
+
 public class InputPanel extends JPanel {
 	private static String MSG_DATE_IN_FUTURE="Date must not be in future";
 	private static String MSG_DATE_FROM_AFTER_TO="From-Date must be before To-Date";
 	private static String MSG_SHOP_NR="0 is not allowed";
 	private static String DATE_FORMAT="dd-MM-yyyy";
-	final JLabel jlErrorDateFrom = new JLabel();
-	final JLabel jlErrorDateTo = new JLabel();
-	final JLabel jlErrorShopNr = new JLabel(MSG_SHOP_NR);
-	final JTextField jtShopnr = new JTextField();
+	final private JLabel jlErrorDateFrom = new JLabel();
+	final private  JLabel jlErrorDateTo = new JLabel();
+	final private JLabel jlErrorShopNr = new JLabel(MSG_SHOP_NR);
+	final private JTextField jtShopnr = new JTextField();
+	private JLabel jlInvoices = new JLabel();
 
 	
 	public InputPanel() {
 		setLayout(new GridBagLayout());
     	//final JButton jbtOk = new JButton(BUTTON_OK);
     	//jbtOk.setEnabled(false);
-
-		
     	
 		GridBagConstraints gbc=new GridBagConstraints();
 		gbc.anchor=GridBagConstraints.WEST;
@@ -149,7 +149,6 @@ public class InputPanel extends JPanel {
 		JLabel jlFilename = new JLabel("Filename");
 		add(jlFilename,gbc);
 		gbc.gridy++;
-		JLabel jlInvoices = new JLabel();
 		add(jlInvoices,gbc);
 
 		gbc.gridx=2;
@@ -160,8 +159,6 @@ public class InputPanel extends JPanel {
 		add(jlErrorDateFrom,gbc);
 		gbc.gridy++;
 		add(jlErrorDateTo,gbc);
-
-		
 		
 		  /*jbtOk.addActionListener(new ActionListener() {
 			  	public void actionPerformed(ActionEvent e) {
@@ -195,6 +192,16 @@ public class InputPanel extends JPanel {
 
 	public JTextField getJtShopnr() {
 		return jtShopnr;
+	}
+
+
+	public ShopData getShopData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setJlInvoices(int invoicesSize) {
+		jlInvoices.setText(String.valueOf(invoicesSize));
 	}
 }
 

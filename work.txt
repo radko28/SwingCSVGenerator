@@ -6,12 +6,14 @@ working - date conditions
 working fake data
 testing --date structure
 testing--init fake data
+
 working--search fake data
 -1 day 7.12
+
+working result obrazovka
+working-1 day 10.12
 
 write csv file
 -1 day 8.12
 running progressbar JPanel
 -1 day 9.12
-result obrazovka
--1 day 10.12
