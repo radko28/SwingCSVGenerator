@@ -1,0 +1,17 @@
+OK - invoice number range
+-opravit 0 pri tlacidle OK
+--6.12
+working - date conditions
+-1 day 6.12
+working fake data
+--init fake data
+--read fake data
+-1 day 7.12
+working write csv file
+-1 day 8.12
+
+
+running progressbar JPanel
+-1 day 9.12
+result obrazovka
+-1 day 10.12
