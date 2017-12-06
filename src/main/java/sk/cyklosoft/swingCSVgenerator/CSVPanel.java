@@ -10,7 +10,7 @@ import sk.cyklosoft.swingCSVgenerator.panel.ButtonPanel;
 import sk.cyklosoft.swingCSVgenerator.panel.InputPanel;
 
 public class CSVPanel extends JFrame {
-	private static String TITLE="CSV Generator";
+	private static String TITLE="Invoice Image PIN";
 	private InputPanel inputPanel;
 	private ButtonPanel buttonPanel;
 	
