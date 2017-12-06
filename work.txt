@@ -1,19 +1,28 @@
 OK - invoice number range
 OK-opravit 0 pri tlacidle OK
 OK--6.12
-working - date conditions
--1 day 6.12
-working fake data
-testing --date structure
-testing--init fake data
-
-working--search fake data
+OK--search fake data
 -1 day 7.12
+OK fake data
+OK --date structure
+OK--init fake data
+OK result obrazovka
+-1 day 10.12
+OK refactor
+OK - date conditions
+-1 day 6.12
 
-working result obrazovka
-working-1 day 10.12
-
+7.12======================================================
 write csv file
+--additional conditions/formatting
+--save to filesystem
+--generate filename
 -1 day 8.12
+7.12======================================================
 running progressbar JPanel
 -1 day 9.12
+8.12======================================================
+
+
+-----------------
+panel model

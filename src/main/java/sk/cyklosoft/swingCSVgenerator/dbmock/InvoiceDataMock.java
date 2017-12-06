@@ -15,7 +15,7 @@ public class InvoiceDataMock {
 	
 	public InvoiceDataMock() {
 		
-		for(int fakthaendler = 1; fakthaendler < 1000; fakthaendler*=10) {
+		for(int fakthaendler = 1; fakthaendler < 1000; fakthaendler+=10) {
 			List<InvoiceData> mockInvoiceDataList = new ArrayList<>();
 			//add mock invoices
 			for(int i = 0; i < 10; i++) {
@@ -35,8 +35,11 @@ public class InvoiceDataMock {
 	}
 	public List<InvoiceData> getInvoiceDataList(ShopData shopData) {
 		List<InvoiceData> searchDataList = invoiceDataMap.get(shopData.getShopnr());
-		return getInvoiceByDate(searchDataList, shopData);
-		
+		if(searchDataList != null) {
+			return getInvoiceByDate(searchDataList, shopData); 
+		} else {
+			return null;
+		}
 	}
 	private List<InvoiceData> getInvoiceByDate(
 			List<InvoiceData> searchDataList, ShopData shopData) {
