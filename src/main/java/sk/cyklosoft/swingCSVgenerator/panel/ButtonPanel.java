@@ -27,11 +27,6 @@ public class ButtonPanel extends JPanel {
     	
 		jbtOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				if( (csvPanel.getInputPanel()).getJtShopnr().getText().length() == 0 || ( (csvPanel.getInputPanel()).getJtShopnr().getText().length() > 0 && csvPanel.getInputPanel().getJtShopnr().getText().charAt(0) == '0')) {
-	//				csvPanel.getInputPanel().getJlErrorShopNr().setForeground(Color.RED);
-	  //			} else {
-	  	//			csvPanel.getInputPanel().getJlErrorShopNr().setForeground(Color.BLACK);
-	  				
   				//search values in database
 	  			List<InvoiceData> invoiceData = new InvoiceDataMock().getInvoiceDataList(csvPanel.getInputPanel().getShopData());
 	  				
@@ -43,7 +38,6 @@ public class ButtonPanel extends JPanel {
 	  				
 	  				//view incount count invoiceData.size()
 	  			csvPanel.getInputPanel().setJlInvoices(invoiceData == null?0:invoiceData.size());
-//	  			}
 			}
 		});			  	
     	

@@ -118,7 +118,7 @@ public class InputPanel extends JPanel {
 					jxdpDateFromValid = false;
 				} else {
 					jlErrorDateFrom.setText("");
-					jlErrorDateFrom.setForeground(Color.WHITE);
+					jlErrorDateFrom.setForeground(Color.BLACK);
 					jxdpDateFromValid = true;
 				}
 				csvPanel.getButtonPanel().getJbtOk().setEnabled(jxdpDateFromValid && jxdpDateToValid && jtShopnrValid);
@@ -131,20 +131,24 @@ public class InputPanel extends JPanel {
 				if(jxdpDateFrom.getDate().compareTo(jxdpDateTo.getDate()) == 1 || jxdpDateTo.getDate().compareTo(new Date()) == 1) {
 					if(jxdpDateTo.getDate().compareTo(new Date()) == 1) {
 						jlErrorDateTo.setText(MSG_DATE_IN_FUTURE);
+						jlErrorDateTo.setForeground(Color.RED);
+						jxdpDateToValid = false;
 					} else {
 						if(jxdpDateFrom.getDate().compareTo(new Date()) != 1) {
 							jlErrorDateFrom.setText(MSG_DATE_FROM_AFTER_TO);
-						}
+							jlErrorDateFrom.setForeground(Color.RED);
+							jxdpDateFromValid = false;
+						} 
 						jlErrorDateTo.setText("");
+						jxdpDateToValid = true;
 					}
-					jlErrorDateTo.setForeground(Color.RED);
-					jxdpDateToValid = false;
 				} else {
 					jlErrorDateTo.setText("");
-					jlErrorDateTo.setForeground(Color.WHITE);	
+					jlErrorDateTo.setForeground(Color.BLACK);	
 					jlErrorDateFrom.setText("");
-					jlErrorDateFrom.setForeground(Color.WHITE);
+					jlErrorDateFrom.setForeground(Color.BLACK);
 					jxdpDateToValid = true;
+					jxdpDateFromValid = true;
 				}
 				csvPanel.getButtonPanel().getJbtOk().setEnabled(jxdpDateFromValid && jxdpDateToValid && jtShopnrValid);
 			}
