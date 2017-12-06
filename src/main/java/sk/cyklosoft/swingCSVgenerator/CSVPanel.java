@@ -3,34 +3,21 @@ package sk.cyklosoft.swingCSVgenerator;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 
-import org.jdesktop.swingx.JXDatePicker;
+import sk.cyklosoft.swingCSVgenerator.panel.InputPanel;
 
 public class CSVPanel extends JFrame {
 	private static String TITLE="CSV Generator";
 	private static String BUTTON_CANCEL="Cancel";
 	private static String BUTTON_OK="Start";
-	
-	
-	 
 	
 	public static void main( String[] args ) throws ParseException {
     	CSVPanel cp = new CSVPanel(TITLE);

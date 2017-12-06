@@ -1,4 +1,4 @@
-package sk.cyklosoft.swingCSVgenerator;
+package sk.cyklosoft.swingCSVgenerator.panel;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -30,8 +30,7 @@ public class InputPanel extends JPanel {
 	final JTextField jtShopnr = new JTextField();
 
 	
-	InputPanel() {
-		super();
+	public InputPanel() {
 		setLayout(new GridBagLayout());
     	//final JButton jbtOk = new JButton(BUTTON_OK);
     	//jbtOk.setEnabled(false);
@@ -197,8 +196,6 @@ public class InputPanel extends JPanel {
 	public JTextField getJtShopnr() {
 		return jtShopnr;
 	}
-
-		
-	}
+}
 
 

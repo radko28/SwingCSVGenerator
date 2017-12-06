@@ -9,10 +9,16 @@
   <url>http://maven.apache.org</url>
   <dependencies>
 <!-- https://mvnrepository.com/artifact/org.swinglabs/swingx -->
-<dependency>
-    <groupId>org.swinglabs</groupId>
-    <artifactId>swingx</artifactId>
-    <version>1.6</version>
-</dependency>
+	<dependency>
+    	<groupId>org.swinglabs</groupId>
+    	<artifactId>swingx</artifactId>
+    	<version>1.6</version>
+	</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+	<dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-csv</artifactId>
+    	<version>1.5</version>
+	</dependency>
   </dependencies>
 </project>
