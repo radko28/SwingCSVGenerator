@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import sk.cyklosoft.swingCSVgenerator.CSVPanel;
 import sk.cyklosoft.swingCSVgenerator.data.InvoiceData;
 import sk.cyklosoft.swingCSVgenerator.dbmock.InvoiceDataMock;
+import sk.cyklosoft.swingCSVgenerator.path.SaveFile;
 
 public class ButtonPanel extends JPanel {
 	private static String BUTTON_CANCEL="Cancel";
@@ -29,14 +30,15 @@ public class ButtonPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
   				//search values in database
 	  			List<InvoiceData> invoiceData = new InvoiceDataMock().getInvoiceDataList(csvPanel.getInputPanel().getShopData());
+  				//progress status
+  				//8.12
 	  				
-	  				//progress status
-	  				//8.12
-	  				
-	  				//save to csv invoiceData
-	  				//7.12
-	  				
-	  				//view incount count invoiceData.size()
+  				//save to csv invoiceData
+  				//7.12
+	  			SaveFile saveFile = new SaveFile(invoiceData);
+	  			saveFile.setFileName(csvPanel.getInputPanel().getShopData());
+	  			saveFile.writeCSV();
+  				//view incount count invoiceData.size()
 	  			csvPanel.getInputPanel().setJlInvoices(invoiceData == null?0:invoiceData.size());
 			}
 		});			  	

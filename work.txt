@@ -12,12 +12,12 @@ OK refactor
 OK - date conditions
 -1 day 6.12
 
-STVRTOK 7.12
+working STVRTOK 7.12
 1.write csv
 write csv file
---additional conditions/formatting
---save to filesystem
---generate filename
+working --additional conditions/formatting
+testing --save to filesystem
+testing --generate filename
 -1 day 8.12
 ======================================================
 PIATOK
@@ -44,3 +44,4 @@ move d_faktsu.rechnungsnr to busy.1
 refactor
 -----------------
 panel model
+properties file
