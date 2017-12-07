@@ -36,8 +36,10 @@ public class InputPanel extends JPanel {
 	private boolean jxdpDateFromValid = true;
 	private boolean jxdpDateToValid = true;
 	private boolean jtShopnrValid = false;
+	private CSVPanel csvPanel;
 	
 	public InputPanel(final CSVPanel csvPanel) {
+		this.csvPanel = csvPanel;
 		setLayout(new GridBagLayout());
     	
 		GridBagConstraints gbc=new GridBagConstraints();
@@ -99,60 +101,15 @@ public class InputPanel extends JPanel {
 		c.add(Calendar.DATE, -180);
 		jxdpDateFrom.setDate(c.getTime());
 		jxdpDateFrom.setFormats(sdf);
+		jxdpDateFrom.addActionListener(dateActionListener);
 		add(jxdpDateFrom,gbc);
 		gbc.gridy++;
 		
 		Calendar cTo = Calendar.getInstance();
 		jxdpDateTo.setDate(cTo.getTime());
 		jxdpDateTo.setFormats(sdf);
-		
-		jxdpDateFrom.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(jxdpDateFrom.getDate().compareTo(jxdpDateTo.getDate()) == 1 || jxdpDateFrom.getDate().compareTo(new Date()) == 1) {
-					if(jxdpDateFrom.getDate().compareTo(new Date()) == 1) {
-						jlErrorDateFrom.setText(MSG_DATE_IN_FUTURE);
-					} else {
-						jlErrorDateFrom.setText(MSG_DATE_FROM_AFTER_TO);
-					}
-					jlErrorDateFrom.setForeground(Color.RED);
-					jxdpDateFromValid = false;
-				} else {
-					jlErrorDateFrom.setText("");
-					jlErrorDateFrom.setForeground(Color.BLACK);
-					jxdpDateFromValid = true;
-				}
-				csvPanel.getButtonPanel().getJbtOk().setEnabled(jxdpDateFromValid && jxdpDateToValid && jtShopnrValid);
-			}
-		  });
-
+		jxdpDateTo.addActionListener(dateActionListener);
 		add(jxdpDateTo,gbc);
-		jxdpDateTo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(jxdpDateFrom.getDate().compareTo(jxdpDateTo.getDate()) == 1 || jxdpDateTo.getDate().compareTo(new Date()) == 1) {
-					if(jxdpDateTo.getDate().compareTo(new Date()) == 1) {
-						jlErrorDateTo.setText(MSG_DATE_IN_FUTURE);
-						jlErrorDateTo.setForeground(Color.RED);
-						jxdpDateToValid = false;
-					} else {
-						if(jxdpDateFrom.getDate().compareTo(new Date()) != 1) {
-							jlErrorDateFrom.setText(MSG_DATE_FROM_AFTER_TO);
-							jlErrorDateFrom.setForeground(Color.RED);
-							jxdpDateFromValid = false;
-						} 
-						jlErrorDateTo.setText("");
-						jxdpDateToValid = true;
-					}
-				} else {
-					jlErrorDateTo.setText("");
-					jlErrorDateTo.setForeground(Color.BLACK);	
-					jlErrorDateFrom.setText("");
-					jlErrorDateFrom.setForeground(Color.BLACK);
-					jxdpDateToValid = true;
-					jxdpDateFromValid = true;
-				}
-				csvPanel.getButtonPanel().getJbtOk().setEnabled(jxdpDateFromValid && jxdpDateToValid && jtShopnrValid);
-			}
-		  });
 		gbc.gridy++;
 
 		JLabel jlFilename = new JLabel("Filename");
@@ -181,6 +138,34 @@ public class InputPanel extends JPanel {
 	public void setJlInvoices(int invoicesSize) {
 		jlInvoices.setText(String.valueOf(invoicesSize));
 	}
+	
+	ActionListener dateActionListener = new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			//dateFrom			
+			jlErrorDateFrom.setForeground(Color.RED);
+			jxdpDateFromValid = false;
+			if(jxdpDateFrom.getDate().compareTo(new Date()) == 1) {
+				jlErrorDateFrom.setText(MSG_DATE_IN_FUTURE);
+			} else if(jxdpDateFrom.getDate().compareTo(jxdpDateTo.getDate()) == 1) {
+				jlErrorDateFrom.setText(MSG_DATE_FROM_AFTER_TO);
+			} else {
+				jlErrorDateFrom.setText("");
+				jlErrorDateFrom.setForeground(Color.BLACK);
+				jxdpDateFromValid = true;
+			}
+	//dateTo
+			if(jxdpDateTo.getDate().compareTo(new Date()) == 1) {
+				jlErrorDateTo.setText(MSG_DATE_IN_FUTURE);
+				jlErrorDateTo.setForeground(Color.RED);
+				jxdpDateToValid = false;
+			} else {
+				jlErrorDateTo.setText("");
+				jlErrorDateTo.setForeground(Color.BLACK);
+				jxdpDateToValid = true;
+			}				
+			csvPanel.getButtonPanel().getJbtOk().setEnabled(jxdpDateFromValid && jxdpDateToValid && jtShopnrValid);
+		}
+	};
 }
 
 

@@ -15,14 +15,14 @@ public class InvoiceDataMock {
 	
 	public InvoiceDataMock() {
 		
-		for(int fakthaendler = 1; fakthaendler < 1000; fakthaendler+=10) {
+		for(int fakthaendler = 1; fakthaendler < 1000; fakthaendler++) {
 			List<InvoiceData> mockInvoiceDataList = new ArrayList<>();
 			//add mock invoices
-			for(int i = 0; i < 10; i++) {
+			Calendar c = Calendar.getInstance();
+			c.add(Calendar.DATE, -10);
+			for(int i = 0; i < 1999; i++) {
 				InvoiceData mockInvoiceData = new InvoiceData();
 				mockInvoiceData.setAccessCode(fakthaendler%3);
-				Calendar c = Calendar.getInstance();
-				c.add(Calendar.DATE, -i*10);
 				mockInvoiceData.setBelegdatum(c.getTime());
 				mockInvoiceData.setFakthaendler(fakthaendler);
 				mockInvoiceData.setFaktversion(FaktVersion.FAKTVERSION_AKTUELL);
