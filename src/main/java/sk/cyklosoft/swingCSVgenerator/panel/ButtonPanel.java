@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import sk.cyklosoft.swingCSVgenerator.CSVPanel;
 import sk.cyklosoft.swingCSVgenerator.data.InvoiceData;
 import sk.cyklosoft.swingCSVgenerator.dbmock.InvoiceDataMock;
-import sk.cyklosoft.swingCSVgenerator.path.SaveFile;
+import sk.cyklosoft.swingCSVgenerator.file.SaveFile;
 
 public class ButtonPanel extends JPanel {
 	private static String BUTTON_CANCEL="Cancel";
@@ -33,12 +33,12 @@ public class ButtonPanel extends JPanel {
   				//progress status
   				//8.12
 	  				
-  				//save to csv invoiceData
+  				//save invoiceData to csv 
   				//7.12
 	  			SaveFile saveFile = new SaveFile(invoiceData);
 	  			saveFile.setFileName(csvPanel.getInputPanel().getShopData());
 	  			saveFile.writeCSV();
-  				//view incount count invoiceData.size()
+  				//view invoice count invoiceData.size()
 	  			csvPanel.getInputPanel().setJlInvoices(invoiceData == null?0:invoiceData.size());
 			}
 		});			  	

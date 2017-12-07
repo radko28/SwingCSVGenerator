@@ -1,4 +1,4 @@
-package sk.cyklosoft.swingCSVgenerator.path;
+package sk.cyklosoft.swingCSVgenerator.file;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

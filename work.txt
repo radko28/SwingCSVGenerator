@@ -38,7 +38,6 @@ move d_faktsu.rechnungsnr to busy.1
 	  
 ?processing invoice nr. ________ ?	  
 -----------------------
-1.write csv
 2.progress bar
 -sobota
 refactor
