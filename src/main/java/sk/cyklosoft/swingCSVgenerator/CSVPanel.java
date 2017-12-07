@@ -11,13 +11,14 @@ import sk.cyklosoft.swingCSVgenerator.panel.InputPanel;
 
 public class CSVPanel extends JFrame {
 	private static String TITLE="Invoice Image PIN";
+	public static String DATE_FORMAT="dd-MM-yyyy";
 	private InputPanel inputPanel;
 	private ButtonPanel buttonPanel;
 	
 	public static void main( String[] args ) throws ParseException {
     	CSVPanel cp = new CSVPanel(TITLE);
    		cp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cp.setSize(600,300);
+		cp.setSize(700,300);
 		cp.setVisible(true);
     }
 	

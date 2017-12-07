@@ -35,11 +35,14 @@ public class ButtonPanel extends JPanel {
 	  				
   				//save invoiceData to csv 
   				//7.12
-	  			SaveFile saveFile = new SaveFile(invoiceData);
-	  			saveFile.setFileName(csvPanel.getInputPanel().getShopData());
-	  			saveFile.writeCSV();
+	  			if(invoiceData != null && invoiceData.size() > 0) {
+	  				SaveFile saveFile = new SaveFile(invoiceData);
+	  				String fileName = saveFile.setFileName(csvPanel.getInputPanel().getShopData());
+	  				csvPanel.getInputPanel().setJlFilename(fileName);
+	  				saveFile.writeCSV();
+	  			}
   				//view invoice count invoiceData.size()
-	  			csvPanel.getInputPanel().setJlInvoices(invoiceData == null?0:invoiceData.size());
+	  			csvPanel.getInputPanel().setJlInvoices(invoiceData == null || invoiceData.size() == 0?0:invoiceData.size());
 			}
 		});			  	
     	

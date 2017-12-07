@@ -19,7 +19,7 @@ working --additional conditions/formatting
 testing --save to filesystem
 testing --generate filename
 -1 day 8.12
-======================================================
+------------------------------------------------------
 PIATOK
 2.progress bar
 -read data from DB

@@ -25,12 +25,13 @@ public class InputPanel extends JPanel {
 	private static String MSG_DATE_IN_FUTURE="Date must not be in future";
 	private static String MSG_DATE_FROM_AFTER_TO="From-Date must be before To-Date";
 	private static String MSG_SHOP_NR="0 is not allowed,range:1-9999999";
-	private static String DATE_FORMAT="dd-MM-yyyy";
+	
 	final private JLabel jlErrorDateFrom = new JLabel();
 	final private  JLabel jlErrorDateTo = new JLabel();
 	final private JLabel jlErrorShopNr = new JLabel(MSG_SHOP_NR);
 	final private JTextField jtShopnr = new JTextField();
 	private JLabel jlInvoices = new JLabel();
+	private JLabel jlFilename = new JLabel();
 	final private JXDatePicker jxdpDateTo = new JXDatePicker();
 	final private JXDatePicker jxdpDateFrom = new JXDatePicker();
 	private boolean jxdpDateFromValid = true;
@@ -95,9 +96,9 @@ public class InputPanel extends JPanel {
 	        }
 		});
 		gbc.gridy++;
-	
+
+		SimpleDateFormat sdf= new SimpleDateFormat(CSVPanel.DATE_FORMAT);
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf= new SimpleDateFormat(DATE_FORMAT);
 		c.add(Calendar.DATE, -180);
 		jxdpDateFrom.setDate(c.getTime());
 		jxdpDateFrom.setFormats(sdf);
@@ -112,7 +113,6 @@ public class InputPanel extends JPanel {
 		add(jxdpDateTo,gbc);
 		gbc.gridy++;
 
-		JLabel jlFilename = new JLabel("Filename");
 		add(jlFilename,gbc);
 		gbc.gridy++;
 		add(jlInvoices,gbc);
@@ -135,10 +135,6 @@ public class InputPanel extends JPanel {
 		return shopData;
 	}
 
-	public void setJlInvoices(int invoicesSize) {
-		jlInvoices.setText(String.valueOf(invoicesSize));
-	}
-	
 	ActionListener dateActionListener = new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 			//dateFrom			
@@ -166,6 +162,14 @@ public class InputPanel extends JPanel {
 			csvPanel.getButtonPanel().getJbtOk().setEnabled(jxdpDateFromValid && jxdpDateToValid && jtShopnrValid);
 		}
 	};
+	
+	public void setJlInvoices(int invoicesSize) {
+		jlInvoices.setText(String.valueOf(invoicesSize));
+	}
+
+	public void setJlFilename(String fileName) {
+		jlFilename.setText(String.valueOf(fileName));
+	}
 }
 
 
