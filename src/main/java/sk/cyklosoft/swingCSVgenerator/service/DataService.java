@@ -17,6 +17,7 @@ import sk.cyklosoft.swingCSVgenerator.file.SaveFile;
 /**
  * 
  * creating mock data
+ * save data to CSV file
  *
  */
 public class DataService extends SwingWorker<Void, Integer> {
