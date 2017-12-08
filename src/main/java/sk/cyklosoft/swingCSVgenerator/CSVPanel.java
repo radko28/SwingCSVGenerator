@@ -25,14 +25,14 @@ public class CSVPanel extends JFrame {
 						cp = new CSVPanel(TITLE);
 		           		cp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		        		cp.setSize(700,300);
+		        		cp.setLocationRelativeTo(null);
 		        		cp.setVisible(true);
 						
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
-
 	            }
-	        });
+		 });
     }
 	
     public CSVPanel(String title) throws ParseException {
