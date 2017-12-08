@@ -3,15 +3,12 @@ package sk.cyklosoft.swingCSVgenerator.panel;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import sk.cyklosoft.swingCSVgenerator.CSVPanel;
-import sk.cyklosoft.swingCSVgenerator.data.InvoiceData;
-import sk.cyklosoft.swingCSVgenerator.dbmock.InvoiceDataMock;
-import sk.cyklosoft.swingCSVgenerator.file.SaveFile;
+import sk.cyklosoft.swingCSVgenerator.service.DataService;
 
 public class ButtonPanel extends JPanel {
 	private static String BUTTON_CANCEL="Cancel";
@@ -28,24 +25,12 @@ public class ButtonPanel extends JPanel {
     	
 		jbtOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-  				//search values in database
-	  			List<InvoiceData> invoiceData = new InvoiceDataMock().getInvoiceDataList(csvPanel.getInputPanel().getShopData());
-  				//progress status
-  				//8.12
-	  				
-  				//save invoiceData to csv 
-  				//7.12
-	  			if(invoiceData != null && invoiceData.size() > 0) {
-	  				SaveFile saveFile = new SaveFile(invoiceData);
-	  				String fileName = saveFile.setFileName(csvPanel.getInputPanel().getShopData());
-	  				csvPanel.getInputPanel().setJlFilename(fileName);
-	  				saveFile.writeCSV();
-	  			}
-  				//view invoice count invoiceData.size()
-	  			csvPanel.getInputPanel().setJlInvoices(invoiceData == null || invoiceData.size() == 0?0:invoiceData.size());
+				csvPanel.getInputPanel().setJlFilename("");
+				DataService dataService = new DataService(csvPanel);
+				dataService.execute();
 			}
-		});			  	
-    	
+		});
+		
 		jbtCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);

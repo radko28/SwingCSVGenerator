@@ -4,11 +4,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.security.CodeSource;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -24,6 +24,7 @@ public class SaveFile {
 	private String fileName;
 	private List<InvoiceData> invoiceDataList;
 	private String[] header = {"Invoice to ShopNr","Invoice Number", "Invoice Date", "PIN"};
+
 	
 	 public SaveFile(List<InvoiceData> invoiceDataList) {
 		 this.invoiceDataList = invoiceDataList;
@@ -48,13 +49,12 @@ public class SaveFile {
 		 BufferedWriter writer = null;
 		 try { 
 			 String currentDir = new java.io.File( "." ).getCanonicalPath();
-			 writer = Files.newBufferedWriter(Paths.get(currentDir,fileName), Charset.forName("UTF-8"), StandardOpenOption.CREATE_NEW);
+			 Path path = Paths.get(currentDir,fileName);
+			 StandardOpenOption soo = Files.exists(path, LinkOption.NOFOLLOW_LINKS)?StandardOpenOption.TRUNCATE_EXISTING:StandardOpenOption.CREATE;
+			 writer = Files.newBufferedWriter(path, Charset.forName("UTF-8"), soo);
 		 	 csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL.withHeader(header));
 		 	 for(InvoiceData invoiceData:invoiceDataList) {
-			 		csvPrinter.printRecord("1", "Sundar Pichai", "CEO", "Google");
-				 	csvPrinter.printRecord("2", "Satya Nadella", "CEO", "Microsoft");
-				 	csvPrinter.printRecord("3", "Tim cook", "CEO", "Apple");
-				 	csvPrinter.printRecord(Arrays.asList("4", "Mark Zuckerberg", "CEO", "Facebook"));		 		 
+		 		csvPrinter.printRecord(invoiceData.getFakthaendler(), invoiceData.getRechnungsnr(), invoiceData.getBelegdatum(), invoiceData.getAccessCode());
 		 	 }
 		 } catch (IOException e) {
 			 e.printStackTrace();

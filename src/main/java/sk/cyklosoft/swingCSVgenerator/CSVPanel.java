@@ -5,6 +5,7 @@ import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import sk.cyklosoft.swingCSVgenerator.panel.ButtonPanel;
 import sk.cyklosoft.swingCSVgenerator.panel.InputPanel;
@@ -16,10 +17,22 @@ public class CSVPanel extends JFrame {
 	private ButtonPanel buttonPanel;
 	
 	public static void main( String[] args ) throws ParseException {
-    	CSVPanel cp = new CSVPanel(TITLE);
-   		cp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cp.setSize(700,300);
-		cp.setVisible(true);
+		 SwingUtilities.invokeLater(new Runnable() {
+	            @Override
+	            public void run() {
+	            	CSVPanel cp;
+					try {
+						cp = new CSVPanel(TITLE);
+		           		cp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		        		cp.setSize(700,300);
+		        		cp.setVisible(true);
+						
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+
+	            }
+	        });
     }
 	
     public CSVPanel(String title) throws ParseException {

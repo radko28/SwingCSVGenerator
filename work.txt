@@ -12,35 +12,24 @@ OK refactor
 OK - date conditions
 -1 day 6.12
 
-working STVRTOK 7.12
-1.write csv
-write csv file
-working --additional conditions/formatting
-testing --save to filesystem
-testing --generate filename
--1 day 8.12
+OKworking STVRTOK 7.12
+OK 1.write csv
+OK -write csv file
+OK--rewriting file
+OK --additional conditions/formatting
+OK --save to filesystem
+OK --generate filename
+OK-1 day 8.12
 ------------------------------------------------------
-PIATOK
-2.progress bar
--read data from DB
--write to file
-running progressbar JPanel
--1 day 9.12
+OKPIATOK
+OK-2.progress bar
+OK-read data from DB
+OK-write to file
+OKrunning progressbar JPanel
+OK-1 day 9.12
 ======================================================
-progessbar
--more data
--update progess bar with invoicesCount
---progressBar.setValue(progress);
 
-#zapis dat do suboru
-increment invoicesCount
-move d_faktsu.rechnungsnr to busy.1
-	  
-?processing invoice nr. ________ ?	  
------------------------
-2.progress bar
--sobota
-refactor
------------------
+
+design
 panel model
 properties file

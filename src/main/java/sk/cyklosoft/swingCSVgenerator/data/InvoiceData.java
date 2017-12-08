@@ -9,6 +9,7 @@ public class InvoiceData {
 	private Date belegdatum;
 	private int accessCode;
 	private FaktVersion faktversion;
+	private String PIN_EMPTY_VALUE = "no PIN available";
 	
 	public int getFakthaendler() {
 		return fakthaendler;
@@ -28,8 +29,11 @@ public class InvoiceData {
 	public void setBelegdatum(Date belegdatum) {
 		this.belegdatum = belegdatum;
 	}
-	public int getAccessCode() {
-		return accessCode;
+	public String getAccessCode() {
+		if(accessCode == 0) {
+			return PIN_EMPTY_VALUE;
+		}
+		return String.valueOf(accessCode);
 	}
 	public void setAccessCode(int accessCode) {
 		this.accessCode = accessCode;

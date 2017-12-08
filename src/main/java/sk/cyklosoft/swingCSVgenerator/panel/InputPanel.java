@@ -163,8 +163,8 @@ public class InputPanel extends JPanel {
 		}
 	};
 	
-	public void setJlInvoices(int invoicesSize) {
-		jlInvoices.setText(String.valueOf(invoicesSize));
+	public void setJlInvoices(String invoicesSize) {
+		jlInvoices.setText(invoicesSize);
 	}
 
 	public void setJlFilename(String fileName) {
