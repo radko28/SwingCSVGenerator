@@ -1,6 +1,9 @@
 package sk.cyklosoft.swingCSVgenerator.data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import sk.cyklosoft.swingCSVgenerator.CSVPanel;
 
 public class InvoiceData {
 	
@@ -26,6 +29,12 @@ public class InvoiceData {
 	public Date getBelegdatum() {
 		return belegdatum;
 	}
+	
+	public String getStringBelegdatum() {
+		SimpleDateFormat sdf= new SimpleDateFormat(CSVPanel.DATE_FORMAT);
+		return sdf.format(belegdatum);
+	}
+	
 	public void setBelegdatum(Date belegdatum) {
 		this.belegdatum = belegdatum;
 	}

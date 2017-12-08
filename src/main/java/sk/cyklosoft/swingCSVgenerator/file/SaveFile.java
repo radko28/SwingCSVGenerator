@@ -54,7 +54,7 @@ public class SaveFile {
 			 writer = Files.newBufferedWriter(path, Charset.forName("UTF-8"), soo);
 		 	 csvPrinter = new CSVPrinter(writer, CSVFormat.EXCEL.withHeader(header));
 		 	 for(InvoiceData invoiceData:invoiceDataList) {
-		 		csvPrinter.printRecord(invoiceData.getFakthaendler(), invoiceData.getRechnungsnr(), invoiceData.getBelegdatum(), invoiceData.getAccessCode());
+		 		csvPrinter.printRecord(invoiceData.getFakthaendler(), invoiceData.getRechnungsnr(), invoiceData.getStringBelegdatum(), invoiceData.getAccessCode());
 		 	 }
 		 } catch (IOException e) {
 			 e.printStackTrace();

@@ -28,8 +28,6 @@ OK-write to file
 OKrunning progressbar JPanel
 OK-1 day 9.12
 ======================================================
-
-
 design
 panel model
 properties file
