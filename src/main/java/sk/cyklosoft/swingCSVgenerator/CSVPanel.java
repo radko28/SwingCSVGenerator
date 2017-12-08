@@ -26,6 +26,7 @@ public class CSVPanel extends JFrame {
 		           		cp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		        		cp.setSize(700,300);
 		        		cp.setLocationRelativeTo(null);
+		        		cp.setResizable(false);
 		        		cp.setVisible(true);
 						
 					} catch (ParseException e) {
