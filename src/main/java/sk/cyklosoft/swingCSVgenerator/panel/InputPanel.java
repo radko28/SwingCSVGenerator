@@ -26,8 +26,8 @@ public class InputPanel extends JPanel {
 	private static String MSG_DATE_FROM_AFTER_TO="From-Date must be before To-Date";
 	private static String MSG_SHOP_NR="0 is not allowed, range:1-9999999           ";
 	private static String LABEL_SHOP_NR="Invoice to ShopNr";
-	private static String LABEL_DATE_FROM="Invoice Date from";
-	private static String LABEL_DATE_TO="Invoice Date from";
+	private static String LABEL_DATE_FROM="Invoice Date From";
+	private static String LABEL_DATE_TO="Invoice Date To";
 	private static String LABEL_DATE_FILENAME="Filename";
 	private static String LABEL_INVOICES="Invoices exported";
 	
