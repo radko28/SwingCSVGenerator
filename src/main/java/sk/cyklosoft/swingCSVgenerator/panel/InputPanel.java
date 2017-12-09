@@ -24,7 +24,12 @@ import sk.cyklosoft.swingCSVgenerator.data.ShopData;
 public class InputPanel extends JPanel {
 	private static String MSG_DATE_IN_FUTURE="Date must not be in future";
 	private static String MSG_DATE_FROM_AFTER_TO="From-Date must be before To-Date";
-	private static String MSG_SHOP_NR="0 is not allowed,range:1-9999999";
+	private static String MSG_SHOP_NR="0 is not allowed, range:1-9999999           ";
+	private static String LABEL_SHOP_NR="Invoice to ShopNr";
+	private static String LABEL_DATE_FROM="Invoice Date from";
+	private static String LABEL_DATE_TO="Invoice Date from";
+	private static String LABEL_DATE_FILENAME="Filename";
+	private static String LABEL_INVOICES="Invoices exported";
 	
 	final private JLabel jlErrorDateFrom = new JLabel();
 	final private  JLabel jlErrorDateTo = new JLabel();
@@ -46,18 +51,19 @@ public class InputPanel extends JPanel {
 		GridBagConstraints gbc=new GridBagConstraints();
 		gbc.anchor=GridBagConstraints.WEST;
 		gbc.insets=new Insets(5,10,5,10);
+		
 //labels, textfields
 		gbc.gridx=0;
 		gbc.gridy=0;
-		add(new JLabel("Invoice to ShopNr"),gbc);
+		add(new JLabel(LABEL_SHOP_NR),gbc);
 		gbc.gridy++;
-		add(new JLabel("Invoice Date from"),gbc);
+		add(new JLabel(LABEL_DATE_FROM),gbc);
 		gbc.gridy++;
-		add(new JLabel("Invoice Date to"),gbc);
+		add(new JLabel(LABEL_DATE_TO),gbc);
 		gbc.gridy++;
-		add(new JLabel("Filename"),gbc);
+		add(new JLabel(LABEL_DATE_FILENAME),gbc);
 		gbc.gridy++;
-		add(new JLabel("Invoices exported"),gbc);
+		add(new JLabel(LABEL_INVOICES),gbc);
 
 		gbc.gridx=1;
 		gbc.gridy=0;
@@ -113,15 +119,16 @@ public class InputPanel extends JPanel {
 		add(jxdpDateTo,gbc);
 		gbc.gridy++;
 
+		gbc.gridwidth = 3;
 		add(jlFilename,gbc);
 		gbc.gridy++;
 		add(jlInvoices,gbc);
 
 		gbc.gridx=2;
 		gbc.gridy=0;
+		gbc.gridwidth = 2;
 		add(jlErrorShopNr,gbc);
 		gbc.gridy++;
-
 		add(jlErrorDateFrom,gbc);
 		gbc.gridy++;
 		add(jlErrorDateTo,gbc);

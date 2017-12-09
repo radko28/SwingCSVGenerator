@@ -21,6 +21,8 @@ import sk.cyklosoft.swingCSVgenerator.file.SaveFile;
  *
  */
 public class DataService extends SwingWorker<Void, Integer> {
+	private static String MSG_INVOICES_EXPORTED="There is no available invoice";
+	private static String MSG_SEARCHING="searching...";
 	private CSVPanel csvPanel;
 	private Map<Integer, List<InvoiceData>> invoiceDataMap = new LinkedHashMap<Integer,List<InvoiceData>>();
 	
@@ -37,7 +39,7 @@ public class DataService extends SwingWorker<Void, Integer> {
 			List<InvoiceData> mockInvoiceDataList = new ArrayList<>();
 			//add mock invoices
 			Calendar c = Calendar.getInstance();
-			c.set(Calendar.HOUR, 0);
+			c.set(Calendar.HOUR_OF_DAY, 0);
 			c.set(Calendar.MINUTE, 0);
 			c.set(Calendar.SECOND, 0);
 			c.set(Calendar.MILLISECOND, 0);
@@ -64,14 +66,14 @@ public class DataService extends SwingWorker<Void, Integer> {
 	
     @Override
     protected void process(List<Integer> chunks) {
- 		csvPanel.getInputPanel().setJlInvoices("searching..." + String.valueOf(chunks.get(chunks.size() - 1) + " %"));
+ 		csvPanel.getInputPanel().setJlInvoices(MSG_SEARCHING + String.valueOf(chunks.get(chunks.size() - 1) + " %"));
     }
 
     @Override
     protected void done() {
     	List<InvoiceData> invoiceData = getInvoiceDataList();
     	//save invoiceData to csv
-    	String invoicesExported = "There is no available invoice.";
+    	String invoicesExported = MSG_INVOICES_EXPORTED;
     	if(invoiceData != null && invoiceData.size() > 0) {
     		SaveFile saveFile = new SaveFile(invoiceData);
     		String fileName = saveFile.setFileName(csvPanel.getInputPanel().getShopData());

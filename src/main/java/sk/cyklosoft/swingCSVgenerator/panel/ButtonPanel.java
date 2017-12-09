@@ -17,7 +17,6 @@ public class ButtonPanel extends JPanel {
 	
 	public ButtonPanel(final CSVPanel csvPanel) {
 		setLayout(new FlowLayout());
-		
     	jbtOk.setEnabled(false);
     	JButton jbtCancel=new JButton(BUTTON_CANCEL);
     	add(jbtOk);
